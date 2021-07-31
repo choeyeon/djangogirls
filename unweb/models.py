@@ -53,8 +53,13 @@ class Event(models.Model):
 
 
 
+
+
+
+
 class UserReg(models.Model):
 
+    profile_photo = models.ImageField(upload_to ='', null=True, blank=True)
     firstname = models.CharField(max_length=100)
     Email = models.EmailField(max_length=40)
 
@@ -63,7 +68,17 @@ class UserReg(models.Model):
 
 class Profile(models.Model):
 
+    photo = models.ImageField()
     name = models.CharField(max_length=100)
+
+
+
+
+
+
+
+class AddNewEvent(models.Model):
+    ...
 
 
 

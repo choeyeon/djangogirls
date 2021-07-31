@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+from unweb.api import YourCustomViewSet
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+
+
+
+default_router = DefaultRouter(trailing_slash=False)
+
+default_router.register('phone', YourCustomViewSet, basename='phone')
+
+urlpatterns = default_router.urls

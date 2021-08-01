@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'unweb',
     'rest_framework',
-    'phone_verify',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

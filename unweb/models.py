@@ -1,84 +1,78 @@
+
+
+import uuid
+from django.db.models.fields.related import ForeignKey
+from django.forms.fields import ImageField
+
+from django.utils.translation import ugettext_lazy as _
+
+#from phonenumber_field.formfields import PhoneNumberField
 from types import ClassMethodDescriptorType
 from django.db import models
-from django.db.models.fields import CharField
+from django.db.models.fields import CharField, DateField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-class Service(models.Model):
-    
-    currency = [
-        (1, 'RUB')
-        (2, 'UAN')
-        (3, 'EUR')
-        (4, 'USD')
-    ]
 
     
-    title = models.CharField(max_length=20)
-    price = models.CharField(max_length=3, choices=currency, default=1)
-    info = models.CharField(max_length=50, help_text='short description')
-    description = models.TextField(max_length=500)
-
-
-
-    def __str__(self):  
-        return self.title
 
 
 
 
-class Categories(models.Model):
-
-    categories = models.CharField(max_length=30)
 
 
+class User (models.Model):
+
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=8)
+    image = models.ImageField()
+    is_superuser = models.NullBooleanField()
+    bank = models.CharField(max_length=100)
+    type_user = models.CharField(max_length=100)
+    #phone = models.PhoneNumderField(null=False, blank=False, unique=True, help_text='phone number')
+    phone_code = models.CharField(max_length=10)
+    email = models.EmailField()
+    id = models.AutoField(primary_key=True)
+
+
+
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    id = models.AutoField(primary_key=True)
+    image = ImageField()
 
 
 
 
 class Event(models.Model):
-    
+
     title = models.CharField(max_length=50)
-    info = models.TextField(max_length=300)
-    requrement = models.CharField(max_length=50)
-    location = models.ImageField()
-    organizer = models.CharField()
+    descriptin = models.TextField(max_length=500)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    #location = models.PointField()
+    is_verified = models.BooleanField(True)
+    price = models.FloatField(blank=False)
+    id = models.AutoField(primary_key=True)
 
 
+class Review(models.Model):
+    text = models.CharField(max_length=50)
+    user_photo = models.ImageField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-    def __str__(self):  
-        return self.title
+class Ticket(models.Model):
 
-
-
-
-
-
-
-
-
-class UserReg(models.Model):
-
-    profile_photo = models.ImageField(upload_to ='', null=True, blank=True)
-    firstname = models.CharField(max_length=100)
-    Email = models.EmailField(max_length=40)
-
-
-
-
-class Profile(models.Model):
-
-    photo = models.ImageField()
-    name = models.CharField(max_length=100)
-
-
-
-
-
-
-
-class AddNewEvent(models.Model):
-    ...
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 
 
@@ -88,14 +82,21 @@ class AddNewEvent(models.Model):
 
 
 
+class MyEvent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
 
 
 
 
 
-    
+class EventImage(models.Model):
+    id = models.AutoField(primary_key=True)
+    image = models.ImageField()
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-    
+
 
 
 

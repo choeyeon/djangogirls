@@ -6,7 +6,7 @@ from django.forms.fields import ImageField
 
 from django.utils.translation import ugettext_lazy as _
 
-#from phonenumber_field.formfields import PhoneNumberField
+#from phonenumber_field.modelfields import PhoneNumberField
 from types import ClassMethodDescriptorType
 from django.db import models
 from django.db.models.fields import CharField, DateField
@@ -26,7 +26,7 @@ class User (models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=8)
     image = models.ImageField()
-    is_superuser = models.NullBooleanField()
+    is_superuser = models.BooleanField(null=True)
     bank = models.CharField(max_length=100)
     type_user = models.CharField(max_length=100)
     #phone = models.PhoneNumderField(null=False, blank=False, unique=True, help_text='phone number')
@@ -47,6 +47,12 @@ class Category(models.Model):
 
 
 
+    def __str__(self):
+        return self.name
+
+
+
+
 class Event(models.Model):
 
     title = models.CharField(max_length=50)
@@ -55,7 +61,6 @@ class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
-    #location = models.PointField()
     is_verified = models.BooleanField(True)
     price = models.FloatField(blank=False)
     id = models.AutoField(primary_key=True)

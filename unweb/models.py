@@ -3,6 +3,7 @@
 import uuid
 from django.db.models.fields.related import ForeignKey
 from django.forms.fields import ImageField
+from django.auth.models import AbstractUser
 
 from django.utils.translation import ugettext_lazy as _
 

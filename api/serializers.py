@@ -1,20 +1,20 @@
 from django.db import models
-from api.models import Category, Event, Event, EventImage, Review, Ticket
+from api.models import Category, Event, Event, EventImage, Review, Ticket, User
 from rest_framework import serializers
-from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['__all__']
+        fields = ['image', 'bank', 'type_user', 'email', 'phone']
 
 
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
+        fields = ['__all__']
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -32,6 +32,7 @@ class RevievSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
+        fields = ['__all__']
         
 
 
@@ -41,6 +42,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ticket
+        fields = ['__all__']
 
 
 class EventImageSerializer(serializers.ModelSerializer):
@@ -48,3 +50,8 @@ class EventImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventImage
+        fields = ['__all__']
+
+
+class EventDateSerializer(serializers.ModelSerializer):
+    ...
